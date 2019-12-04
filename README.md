@@ -39,3 +39,38 @@ const main = ()=>{
 main();
 ----Total 1 chunks---
 ```
+## readLines.js
+### reading user input and counting lines
+```bash
+$ node readLines.js
+Hello
+1:Hello
+One
+2:One
+Two
+3:Two
+Three
+4:Three
+^d
+----Total 4 lines---
+```
+### reading redirected output and counting lines
+```bash
+$ cat readLines.js| node readLines.js 
+1:const readline = require('readline');
+2:const {stdin, stdout} = process;
+3:const recordLine = function(content){
+4:    stdout.write(`${++this.count}:${content}\n`);
+5:};
+6:const summarize = function(){
+7:    stdout.write(`----Total ${this.count} lines---\n`);
+8:};
+9:const main = ()=>{
+10:    const rl = readline.createInterface(stdin);
+11:    const context = {count:0};    
+12:    rl.on('line', recordLine.bind(context));
+13:    rl.on('close', summarize.bind(context));;
+14:}
+15:main();
+----Total 15 lines---
+```
